@@ -1,93 +1,138 @@
-# sniot_zephyr_template
+# Zephyr Example Application
 
+<a href="https://github.com/zephyrproject-rtos/example-application/actions/workflows/build.yml?query=branch%3Amain">
+  <img src="https://github.com/zephyrproject-rtos/example-application/actions/workflows/build.yml/badge.svg?event=push">
+</a>
+<a href="https://github.com/zephyrproject-rtos/example-application/actions/workflows/docs.yml?query=branch%3Amain">
+  <img src="https://github.com/zephyrproject-rtos/example-application/actions/workflows/docs.yml/badge.svg?event=push">
+</a>
+<a href="https://zephyrproject-rtos.github.io/example-application">
+  <img alt="Documentation" src="https://img.shields.io/badge/documentation-3D578C?logo=sphinx&logoColor=white">
+</a>
+<a href="https://zephyrproject-rtos.github.io/example-application/doxygen">
+  <img alt="API Documentation" src="https://img.shields.io/badge/API-documentation-3D578C?logo=c&logoColor=white">
+</a>
 
+This repository contains a Zephyr example application. The main purpose of this
+repository is to serve as a reference on how to structure Zephyr-based
+applications. Some of the features demonstrated in this example are:
 
-## Getting started
+- Basic [Zephyr application][app_dev] skeleton
+- [Zephyr workspace applications][workspace_app]
+- [Zephyr modules][modules]
+- [West T2 topology][west_t2]
+- [Custom boards][board_porting]
+- Custom [devicetree bindings][bindings]
+- Out-of-tree [drivers][drivers]
+- Out-of-tree libraries
+- Example CI configuration (using GitHub Actions)
+- Custom [west extension][west_ext]
+- Custom [Zephyr runner][runner_ext]
+- Doxygen and Sphinx documentation boilerplate
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+This repository is versioned together with the [Zephyr main tree][zephyr]. This
+means that every time that Zephyr is tagged, this repository is tagged as well
+with the same version number, and the [manifest](west.yml) entry for `zephyr`
+will point to the corresponding Zephyr tag. For example, the `example-application`
+v2.6.0 will point to Zephyr v2.6.0. Note that the `main` branch always
+points to the development branch of Zephyr, also `main`.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+[app_dev]: https://docs.zephyrproject.org/latest/develop/application/index.html
+[workspace_app]: https://docs.zephyrproject.org/latest/develop/application/index.html#zephyr-workspace-app
+[modules]: https://docs.zephyrproject.org/latest/develop/modules.html
+[west_t2]: https://docs.zephyrproject.org/latest/develop/west/workspaces.html#west-t2
+[board_porting]: https://docs.zephyrproject.org/latest/guides/porting/board_porting.html
+[bindings]: https://docs.zephyrproject.org/latest/guides/dts/bindings.html
+[drivers]: https://docs.zephyrproject.org/latest/reference/drivers/index.html
+[zephyr]: https://github.com/zephyrproject-rtos/zephyr
+[west_ext]: https://docs.zephyrproject.org/latest/develop/west/extensions.html
+[runner_ext]: https://docs.zephyrproject.org/latest/develop/modules.html#external-runners
 
-## Add your files
+## Getting Started
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+Before getting started, make sure you have a proper Zephyr development
+environment. Follow the official
+[Zephyr Getting Started Guide](https://docs.zephyrproject.org/latest/getting_started/index.html).
 
+### Initialization
+
+The first step is to initialize the workspace folder (``my-workspace``) where
+the ``example-application`` and all Zephyr modules will be cloned. Run the following
+command:
+
+```shell
+# initialize my-workspace for the example-application (main branch)
+west init -m https://github.com/zephyrproject-rtos/example-application --mr main my-workspace
+# update Zephyr modules
+cd my-workspace
+west update
 ```
-cd existing_repo
-git remote add origin https://gitlab.lis-lab.fr/vivien.debuchy/sniot_zephyr_template.git
-git branch -M main
-git push -uf origin main
+
+### Building and running
+
+To build the application, run the following command:
+
+```shell
+cd example-application
+west build -b $BOARD app
 ```
 
-## Integrate with your tools
+where `$BOARD` is the target board.
 
-- [ ] [Set up project integrations](https://gitlab.lis-lab.fr/vivien.debuchy/sniot_zephyr_template/-/settings/integrations)
+You can use the `custom_plank` board found in this
+repository. Note that Zephyr sample boards may be used if an
+appropriate overlay is provided (see `app/boards`).
 
-## Collaborate with your team
+A sample debug configuration is also provided. To apply it, run the following
+command:
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+```shell
+west build -b $BOARD app -- -DEXTRA_CONF_FILE=debug.conf
+```
 
-## Test and Deploy
+Once you have built the application, run the following command to flash it:
 
-Use the built-in continuous integration in GitLab.
+```shell
+west flash
+```
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+### Testing
 
-***
+To execute Twister integration tests, run the following command:
 
-# Editing this README
+```shell
+west twister -T tests --integration
+```
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+### Documentation
 
-## Suggestions for a good README
+A minimal documentation setup is provided for Doxygen and Sphinx. To build the
+documentation first change to the ``doc`` folder:
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+```shell
+cd doc
+```
 
-## Name
-Choose a self-explaining name for your project.
+Before continuing, check if you have Doxygen installed. It is recommended to
+use the same Doxygen version used in [CI](.github/workflows/docs.yml). To
+install Sphinx, make sure you have a Python installation in place and run:
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+```shell
+pip install -r requirements.txt
+```
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+API documentation (Doxygen) can be built using the following command:
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+```shell
+doxygen
+```
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+The output will be stored in the ``_build_doxygen`` folder. Similarly, the
+Sphinx documentation (HTML) can be built using the following command:
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+```shell
+make html
+```
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+The output will be stored in the ``_build_sphinx`` folder. You may check for
+other output formats other than HTML by running ``make help``.
