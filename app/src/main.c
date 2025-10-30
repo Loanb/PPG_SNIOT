@@ -8,6 +8,7 @@
 #define MY_STACK_SIZE 500
 #define MY_PRIORITY 5
 void start_acquisition(const struct device *max30102);
+void configuration_led (const struct device *max30102);
 LOG_MODULE_REGISTER(main, CONFIG_APP_LOG_LEVEL);
 
 /**
@@ -70,12 +71,35 @@ void start_acquisition(const struct device *max30102) {
     printk("Ready to perform acquisition !\n") ;
 }
 
+void configuration_led (const struct device *max30102){
+    struct sensor_value pa_val ; 
+    pa_val.val1 = 50 ;
+    pa_val.val2 = 0 ;
+
+    if (sensor_attr_set(max30102, SENSOR_CHAN_RED,SENSOR_ATTR_PRIV_START, &pa_val) != 0)
+    {
+        LOG_ERR("Failed to set RED LED pulse amplitude.") ;
+    }
+    else
+    {
+        LOG_INF("Set RED LED PA to %d", pa_val.val1) ;
+    }
+    if (sensor_attr_set(max30102, SENSOR_CHAN_IR,SENSOR_ATTR_PRIV_START, &pa_val) != 0)
+    {
+        LOG_ERR("Failed to set IR LED pulse amplitude.") ;
+    }
+    else
+    {
+        LOG_INF("Set IR LED PA to %d", pa_val.val1) ;
+    }
+}
 
 int main(void)
 {
     printk("Starting App ! %s\n", CONFIG_BOARD_TARGET);
     const struct device *max30102 = DEVICE_DT_GET_ANY(maxim_max30102);
     start_acquisition(max30102);
+    configuration_led(max30102);
     while (1) {
         k_sleep(K_SECONDS(1));
         //printk("Hello World\n");
