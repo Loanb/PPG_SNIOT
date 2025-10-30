@@ -32,7 +32,7 @@ static void trigger_handler(const struct device *max30102, const struct sensor_t
         struct ppg_sample sample = {
             .ir = ir.val1,
             .red = red.val1};
-            printk("%d \n", ir.val1);
+            printk("%d %d\n", ir.val1, red.val1);
         break;
     default:
         LOG_ERR("Unknown trigger\n");
