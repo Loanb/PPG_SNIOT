@@ -5,7 +5,9 @@
 #include <app/drivers/sensors/max30102.h>
 #include <stdint.h>
 #include "global.h"
-
+#define MY_STACK_SIZE 500
+#define MY_PRIORITY 5
+void my_entry_point(void *, void *, void *);
 LOG_MODULE_REGISTER(main, CONFIG_APP_LOG_LEVEL);
 
 /**
@@ -53,11 +55,25 @@ static void drdy_trigger_mode(const struct device *max30102)
     LOG_INF("Set trigger handler\n");
 }
 
+
+
+void my_entry_point(void *, void *, void *){
+    while (1) {
+        printk("hello from thread 1");
+        k_sleep(K_SECONDS(1));
+    }
+}
+
+K_THREAD_DEFINE(my_tid, MY_STACK_SIZE,my_entry_point, NULL, NULL, NULL,MY_PRIORITY, 0, 0);
+
+
+
 int main(void)
 {
     printk("Starting App ! %s\n", CONFIG_BOARD_TARGET);
-
+    
     while (1) {
         k_sleep(K_SECONDS(1));
+        printk("Hello World\n");
     }
 }
