@@ -9,6 +9,7 @@
 
 &i2c0 {
     status = "okay";
+	label="I2C_0";
     max30102: max30102@57 {
         compatible = "maxim,max30102";
         reg = <0x57>;

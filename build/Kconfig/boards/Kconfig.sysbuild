@@ -1,0 +1,2 @@
+# Load Sysbuild board Kconfig descriptions.
+osource "/home/seatech/Documents/my-workspace/zephyr/boards/espressif/esp32_devkitc/Kconfig.sysbuild"

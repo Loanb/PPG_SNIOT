@@ -1,0 +1,33 @@
+empty_file.o: \
+ /home/seatech/Documents/my-workspace/zephyr/misc/empty_file.c \
+ /home/seatech/Documents/my-workspace/zephyr/boards/espressif/esp32_devkitc/esp32_devkitc_procpu.dts \
+ /home/seatech/Documents/my-workspace/zephyr/dts/xtensa/espressif/esp32/esp32_wrover_e_n4r8.dtsi \
+ /home/seatech/Documents/my-workspace/zephyr/dts/xtensa/espressif/esp32/esp32_common.dtsi \
+ /home/seatech/Documents/my-workspace/zephyr/dts/common/mem.h \
+ /home/seatech/Documents/my-workspace/zephyr/dts/common/freq.h \
+ /home/seatech/Documents/my-workspace/zephyr/dts/xtensa/xtensa.dtsi \
+ /home/seatech/Documents/my-workspace/zephyr/dts/common/skeleton.dtsi \
+ /home/seatech/Documents/my-workspace/zephyr/include/zephyr/dt-bindings/adc/adc.h \
+ /home/seatech/Documents/my-workspace/zephyr/include/zephyr/dt-bindings/dt-util.h \
+ /home/seatech/Documents/my-workspace/zephyr/include/zephyr/sys/util_macro.h \
+ /home/seatech/Documents/my-workspace/zephyr/include/zephyr/sys/util_internal.h \
+ /home/seatech/Documents/my-workspace/zephyr/include/zephyr/sys/util_loops.h \
+ /home/seatech/Documents/my-workspace/zephyr/include/zephyr/sys/util_listify.h \
+ /home/seatech/Documents/my-workspace/zephyr/include/zephyr/sys/util_internal_is_eq.h \
+ /home/seatech/Documents/my-workspace/zephyr/include/zephyr/sys/util_internal_util_inc.h \
+ /home/seatech/Documents/my-workspace/zephyr/include/zephyr/sys/util_internal_util_dec.h \
+ /home/seatech/Documents/my-workspace/zephyr/include/zephyr/sys/util_internal_util_x2.h \
+ /home/seatech/Documents/my-workspace/zephyr/include/zephyr/dt-bindings/gpio/gpio.h \
+ /home/seatech/Documents/my-workspace/zephyr/include/zephyr/dt-bindings/i2c/i2c.h \
+ /home/seatech/Documents/my-workspace/zephyr/include/zephyr/dt-bindings/clock/esp32_clock.h \
+ /home/seatech/Documents/my-workspace/zephyr/include/zephyr/dt-bindings/interrupt-controller/esp-xtensa-intmux.h \
+ /home/seatech/Documents/my-workspace/zephyr/include/zephyr/dt-bindings/pinctrl/esp32-pinctrl.h \
+ /home/seatech/Documents/my-workspace/zephyr/include/zephyr/dt-bindings/pwm/pwm.h \
+ /home/seatech/Documents/my-workspace/zephyr/boards/espressif/esp32_devkitc/esp32_devkitc-pinctrl.dtsi \
+ /home/seatech/Documents/my-workspace/zephyr/include/zephyr/dt-bindings/pinctrl/esp-pinctrl-common.h \
+ /home/seatech/Documents/my-workspace/zephyr/include/zephyr/dt-bindings/pinctrl/esp32-gpio-sigmap.h \
+ /home/seatech/Documents/my-workspace/zephyr/include/zephyr/dt-bindings/input/input-event-codes.h \
+ /home/seatech/Documents/my-workspace/zephyr/include/zephyr/dt-bindings/input/esp32-touch-sensor-input.h \
+ /home/seatech/Documents/my-workspace/zephyr/dts/vendor/espressif/partitions_0x1000_amp.dtsi \
+ /home/seatech/Documents/my-workspace/zephyr/dts/vendor/espressif/partitions_0x1000_amp_4M.dtsi \
+ /home/seatech/Documents/my-workspace/sniot_zephyr_template/app/boards/esp32_devkitc_procpu.overlay

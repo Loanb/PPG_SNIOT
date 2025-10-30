@@ -1,0 +1,54 @@
+cmake:
+  application:
+    configuration-dir: '/home/seatech/Documents/my-workspace/sniot_zephyr_template/app'
+    source-dir: '/home/seatech/Documents/my-workspace/sniot_zephyr_template/app'
+  board:
+    name: 'esp32_devkitc'
+    path:
+     - '/home/seatech/Documents/my-workspace/zephyr/boards/espressif/esp32_devkitc'
+    qualifiers: 'esp32/procpu'
+    revision: ''
+  devicetree:
+    bindings-dirs:
+     - '/home/seatech/Documents/my-workspace/sniot_zephyr_template/dts/bindings'
+     - '/home/seatech/Documents/my-workspace/zephyr/dts/bindings'
+    files:
+     - '/home/seatech/Documents/my-workspace/zephyr/boards/espressif/esp32_devkitc/esp32_devkitc_procpu.dts'
+     - '/home/seatech/Documents/my-workspace/sniot_zephyr_template/app/boards/esp32_devkitc_procpu.overlay'
+    include-dirs:
+     - '/home/seatech/Documents/my-workspace/sniot_zephyr_template/include'
+     - '/home/seatech/Documents/my-workspace/sniot_zephyr_template/dts'
+     - '/home/seatech/Documents/my-workspace/modules/hal/stm32/dts'
+     - '/home/seatech/Documents/my-workspace/zephyr/include'
+     - '/home/seatech/Documents/my-workspace/zephyr/include/zephyr'
+     - '/home/seatech/Documents/my-workspace/zephyr/dts/common'
+     - '/home/seatech/Documents/my-workspace/zephyr/dts/vendor'
+     - '/home/seatech/Documents/my-workspace/zephyr/dts/rx'
+     - '/home/seatech/Documents/my-workspace/zephyr/dts/x86'
+     - '/home/seatech/Documents/my-workspace/zephyr/dts/xtensa'
+     - '/home/seatech/Documents/my-workspace/zephyr/dts/sparc'
+     - '/home/seatech/Documents/my-workspace/zephyr/dts/riscv'
+     - '/home/seatech/Documents/my-workspace/zephyr/dts/posix'
+     - '/home/seatech/Documents/my-workspace/zephyr/dts/arm64'
+     - '/home/seatech/Documents/my-workspace/zephyr/dts/arm'
+     - '/home/seatech/Documents/my-workspace/zephyr/dts/arc'
+     - '/home/seatech/Documents/my-workspace/zephyr/dts'
+    user-files:
+     - '/home/seatech/Documents/my-workspace/sniot_zephyr_template/app/boards/esp32_devkitc_procpu.overlay'
+  kconfig:
+    files:
+     - '/home/seatech/Documents/my-workspace/zephyr/boards/espressif/esp32_devkitc/esp32_devkitc_procpu_defconfig'
+     - '/home/seatech/Documents/my-workspace/sniot_zephyr_template/app/prj.conf'
+    user-files:
+     - '/home/seatech/Documents/my-workspace/sniot_zephyr_template/app/prj.conf'
+  toolchain:
+    name: 'zephyr'
+    path: '/home/seatech/zephyr-sdk-0.17.4'
+  zephyr:
+    version: '4.3.0-rc1'
+    zephyr-base: '/home/seatech/Documents/my-workspace/zephyr'
+version: '0.1.0'
+west:
+  command: '/home/seatech/zephyrproject/.venv/bin/west build -b esp32_devkitc/esp32/procpu app --pristine'
+  topdir: '/home/seatech/Documents/my-workspace'
+  version: '1.2.0'

@@ -7,7 +7,7 @@
 #include "global.h"
 #define MY_STACK_SIZE 500
 #define MY_PRIORITY 5
-void my_entry_point(void *, void *, void *);
+void start_acquisition(const struct device *max30102);
 LOG_MODULE_REGISTER(main, CONFIG_APP_LOG_LEVEL);
 
 /**
@@ -42,6 +42,7 @@ static void trigger_handler(const struct device *max30102, const struct sensor_t
  */
 static void drdy_trigger_mode(const struct device *max30102)
 {
+    printk("Ready to perform acquisition !") ;
     struct sensor_trigger trig = {
         .type = SENSOR_TRIG_DATA_READY,
         .chan = SENSOR_CHAN_ALL,
@@ -55,25 +56,29 @@ static void drdy_trigger_mode(const struct device *max30102)
     LOG_INF("Set trigger handler\n");
 }
 
-
-
-void my_entry_point(void *, void *, void *){
-    while (1) {
-        printk("hello from thread 1");
-        k_sleep(K_SECONDS(1));
+void start_acquisition(const struct device *max30102) {
+    const struct sensor_value acq_val = {.val1 = 1, .val2 = 0} ;
+        if (sensor_attr_set(max30102, SENSOR_CHAN_ALL, (enum
+            sensor_attribute)MAX30102_ATTR_ACQUISITION, &acq_val) != 0)
+    {
+        printk("Failed to start sensor !\n") ;
+        return ;
     }
+
+    drdy_trigger_mode(max30102) ;
+
+    printk("Ready to perform acquisition !\n") ;
 }
-
-K_THREAD_DEFINE(my_tid, MY_STACK_SIZE,my_entry_point, NULL, NULL, NULL,MY_PRIORITY, 0, 0);
-
 
 
 int main(void)
 {
     printk("Starting App ! %s\n", CONFIG_BOARD_TARGET);
-    
+    const struct device *max30102 = DEVICE_DT_GET_ANY(maxim_max30102);
+    start_acquisition(max30102);
     while (1) {
         k_sleep(K_SECONDS(1));
-        printk("Hello World\n");
+        //printk("Hello World\n");
     }
 }
+
