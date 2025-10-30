@@ -6,3 +6,17 @@
 &gpio {
 	status = "okay";
 };
+
+&i2c0 {
+    status = "okay";
+    max30102: max30102@57 {
+        compatible = "maxim,max30102";
+        reg = <0x57>;
+        intb-gpios = <&gpio0 9 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+        label = "MAX30102";
+        mode = <3>;
+        fifo-a-full = <1>;
+		smp-ave = <1> ;
+		sr = <2> ; 
+    };
+}; 
