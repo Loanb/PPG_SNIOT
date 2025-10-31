@@ -47,7 +47,6 @@ static void trigger_handler(const struct device *max30102, const struct sensor_t
                 //printk("%d\n", i);
             if (i==1024)
             {    
-                printk("Je suis rentre\n");
                 k_sem_give(&sem);
                 i=0;
             }
@@ -124,8 +123,8 @@ int main(void)
     configuration_led(max30102);
     while (1) {
                 k_sem_take(&sem, K_FOREVER);
-                printk("Semaphore reussi !\n");
                 result = fft_processing(buffer);
+                result = result * 60.0f; // Convert to bpm
                 printk("%f\n",result);
                 
     }
