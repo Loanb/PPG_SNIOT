@@ -21,5 +21,6 @@ struct ppg_result
     float spo2;
 };
 
+extern struct ppg_sample buffer[];
 
 #endif /* GLOBAL_H_ */

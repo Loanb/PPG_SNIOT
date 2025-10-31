@@ -5,11 +5,19 @@
 #include <app/drivers/sensors/max30102.h>
 #include <stdint.h>
 #include "global.h"
+#include "processing.h"
 #define MY_STACK_SIZE 500
 #define MY_PRIORITY 5
 void start_acquisition(const struct device *max30102);
 void configuration_led (const struct device *max30102);
 LOG_MODULE_REGISTER(main, CONFIG_APP_LOG_LEVEL);
+
+
+K_SEM_DEFINE(sem, 0, 1);
+int i=0;
+struct ppg_sample buffer [2048];
+float result;
+
 
 /**
  * Handles MAX30102 hardware interrupt
@@ -32,11 +40,24 @@ static void trigger_handler(const struct device *max30102, const struct sensor_t
         struct ppg_sample sample = {
             .ir = ir.val1,
             .red = red.val1};
-            printk("%d %d\n", ir.val1, red.val1);
+            //printk("%d %d\n", ir.val1, red.val1);
+            buffer[i].ir = ir.val1;
+            buffer[i].red = red.val1;
+                i++;
+                //printk("%d\n", i);
+            if (i==1024)
+            {    
+                printk("Je suis rentre\n");
+                k_sem_give(&sem);
+                i=0;
+            }
+
+
         break;
     default:
         LOG_ERR("Unknown trigger\n");
     }
+
 }
 
 /**
@@ -102,8 +123,11 @@ int main(void)
     start_acquisition(max30102);
     configuration_led(max30102);
     while (1) {
-        k_sleep(K_SECONDS(1));
-        //printk("Hello World\n");
+                k_sem_take(&sem, K_FOREVER);
+                printk("Semaphore reussi !\n");
+                result = fft_processing(buffer);
+                printk("%f\n",result);
+                
     }
 }
 

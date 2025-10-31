@@ -110,7 +110,7 @@ static void custom_fft(cpx *X, int N, int logn)
  * @param segment Array of PPG samples
  * @return Dominant frequency in Hz, or 0.0 if no peak found
  */
-static float fft_processing(const struct ppg_sample *segment)
+float fft_processing(const struct ppg_sample *segment)
 {
     const float Nf = (float)FFT_SIZE;
     const float fs = (float)SAMPLES_PER_SECOND;
